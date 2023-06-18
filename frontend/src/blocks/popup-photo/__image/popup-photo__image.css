@@ -1,0 +1,13 @@
+.popup-photo__image{
+    object-fit: inherit;
+    max-width: 75vw;
+    max-height: 75vh;
+}
+.popup-photo__image:hover{
+    cursor: pointer;
+}
+@media screen and (min-width:320px) and (max-width:767px) {
+   .popup-photo__image{
+    object-fit: contain;
+   } 
+}

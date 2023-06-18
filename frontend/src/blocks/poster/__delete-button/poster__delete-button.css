@@ -1,0 +1,10 @@
+.poster__delete-button{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1;
+}
+.poster__delete-button:hover{
+    opacity: 0.7;
+    cursor: pointer;
+}

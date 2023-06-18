@@ -1,0 +1,30 @@
+.poster__item{
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+    max-width: 282px;
+    position: relative;
+    z-index: 0;
+
+}
+
+@media screen and (min-width:320px) and (max-width:767px){
+    .poster__item{
+        padding-bottom: 19px;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (min-width:768px) and (max-width:1279px){
+    .poster__item{
+        margin-top: 30px;
+        padding-bottom: 31px;
+    }
+}
+
+@media screen and (min-width:1280px){
+    .poster__item{
+        padding-bottom: 22px;
+    }
+    
+}

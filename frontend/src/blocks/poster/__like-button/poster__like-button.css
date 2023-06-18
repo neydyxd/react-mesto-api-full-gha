@@ -1,0 +1,15 @@
+.poster__like-button{
+    border:none;
+    background-color: white;
+    background: url(../../../images/like.png) center center no-repeat;
+    width: 22px;
+    height: 20px;
+    padding: 0;
+    
+}
+
+.poster__like-button:hover{
+    cursor: pointer;
+    opacity: 0.5;
+}
+
