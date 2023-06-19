@@ -2,12 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const { cors } = require('cors');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const { createUserValid, loginValid } = require('./middlewares/validation');
 const NotFound = require('./errors/NotFound');
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 app.use(bodyParser.json());
