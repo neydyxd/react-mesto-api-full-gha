@@ -43,5 +43,5 @@ class AuthApi {
       }).then((res) => this._checkError(res));
     }
   }
-  const authApi = new AuthApi("https://auth.nomoreparties.co");
+  const authApi = new AuthApi("https://backend.neydy.nomoredomains.rocks/");
   export default authApi;

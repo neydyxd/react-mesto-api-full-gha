@@ -89,7 +89,6 @@ class Api {
   }
   }
 
-  const api = new Api('https://mesto.nomoreparties.co/v1/cohort-61',
-    '29be019e-c08f-4e81-b274-91fdbf94fa96');
+  const api = new Api('https://backend.neydy.nomoredomains.rocks/');
   
     export default api;
