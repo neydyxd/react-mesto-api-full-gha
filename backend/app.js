@@ -7,6 +7,7 @@ const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const { createUserValid, loginValid } = require('./middlewares/validation');
 const NotFound = require('./errors/NotFound');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 app.use(cors());
@@ -17,13 +18,19 @@ const { createUser, login } = require('./controllers/login');
 
 app.post('/signin', loginValid, login);
 app.post('/signup', createUserValid, createUser);
-
+app.use(requestLogger);
 app.use(usersRouter);
 app.use(cardsRouter);
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 app.use((req, res, next) => {
   next(new NotFound('Страница по этому адресу не найдена'));
 });
 mongoose.connect('mongodb://127.0.0.1/mestodb');
+app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
