@@ -2,6 +2,13 @@ class Api {
     constructor(basePath, token) {
       this._basePath = basePath;
       this._token = token;
+      this.auth = null; 
+    }
+    setAuthHeaders(token) {
+      console.log('token from api', this.auth);
+      this.auth = { ...this.headers,
+    authorization: `Bearer ${token}`,
+       };
     }
     _getHeaders() {
       return {
@@ -25,7 +32,7 @@ class Api {
     createNewCard({ item }) {
       return fetch(`${this._basePath}/cards`, {
         method: "POST",
-        headers: this._getHeaders(),
+        headers: this.auth,
         body: JSON.stringify({
                 link: item.link,
                 name: item.name
