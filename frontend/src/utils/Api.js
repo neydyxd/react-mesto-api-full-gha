@@ -89,6 +89,6 @@ class Api {
   }
   }
 
-  const api = new Api('https://backend.neydy.nomoredomains.rocks/');
+  const api = new Api('https://backend.neydy.nomoredomains.rocks');
   
     export default api;
