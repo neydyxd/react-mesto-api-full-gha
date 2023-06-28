@@ -9,8 +9,8 @@
 
 ## Ссылки на проект
 
-IP-адрес: 158.160.111.209
+IP 158.160.111.209
 
-Frontend https: https://domen.neydy.nomoredomains.rocks/
+Frontend https://domen.neydy.nomoredomains.rocks/
 
-Backend https: https://backend.neydy.nomoredomains.rocks/
+Backend https://backend.neydy.nomoredomains.rocks/
