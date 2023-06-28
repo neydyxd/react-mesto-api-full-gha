@@ -17,8 +17,12 @@ class Api {
     }
   
     getCards() {
+      const token = localStorage.getItem("jwt");
       return fetch(`${this._basePath}/cards`, {
-        headers: this._getHeaders(),
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
       }).then(this._getJson);
     }
   
@@ -38,20 +42,32 @@ class Api {
     }
   
     getCurrentUser() {
+      const token = localStorage.getItem("jwt");
       return fetch(`${this._basePath}/users/me `, {
-        headers: this._getHeaders(),
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
       }).then(this._getJson);
     }
     deleteCard(id) {
+      const token = localStorage.getItem("jwt");
       return fetch(`${this._basePath}/cards/${id} `, {
         method: "DELETE",
-        headers: this._getHeaders(),
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
       }).then(this._getJson);
     }
     createNewAvatar(link) {
+      const token = localStorage.getItem("jwt");
       return fetch(`${this._basePath}/users/me/avatar`, {
         method: "PATCH",
-        headers: this._getHeaders(),
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
           avatar: link,
         }),
@@ -63,9 +79,13 @@ class Api {
     }
 
     createNewProfile(name, job) {
+      const token = localStorage.getItem("jwt");
       return fetch(`${this._basePath}/users/me`, {
         method: "PATCH",
-        headers: this._getHeaders(),
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
           name: name,
           about: job,
@@ -73,17 +93,25 @@ class Api {
       }).then(this._getJson);
     }
     _likeCard(id) {
+      const token = localStorage.getItem("jwt");
       return fetch(`${this._basePath}/cards/${id}/likes`, {
           method: "PUT",
-          headers: this._getHeaders(),
+          headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
       })
       .then(this._getJson);
   }
 
   _deleteLike(id) {
+      const token = localStorage.getItem("jwt");
       return fetch(`${this._basePath}/cards/${id}/likes`, {
           method: "DELETE",
-          headers: this._getHeaders(),
+          headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
       })
       .then(this._getJson);
   }
