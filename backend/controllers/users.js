@@ -2,10 +2,10 @@ const User = require('../models/user');
 const NotFound = require('../errors/NotFound'); // 404
 const BadRequest = require('../errors/BadRequest');
 
-const getAllUsers = (req, res) => {
+const getAllUsers = (req, res, next) => {
   User.find({})
     .then((data) => res.send({ data }))
-    .catch(() => res.status(500).send({ message: 'переданы некорректные данные в методы создания карточки, пользователя, обновления аватара пользователя или профиля' }));
+    .catch(next);
 };
 
 const getUserById = (req, res, next) => {
