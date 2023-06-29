@@ -62,7 +62,7 @@ const getLike = (req, res, next) => {
       if (!card) {
         throw new NotFound('Пользователь не найден');
       }
-      res.send({ data: card });
+      res.send(card);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -71,7 +71,6 @@ const getLike = (req, res, next) => {
       return next(err);
     });
 };
-// убрать лайк
 const removeLike = (req, res, next) => {
   Card
     .findByIdAndUpdate(
