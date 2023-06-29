@@ -32,22 +32,52 @@ function App() {
   const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
   const [headerEmail, setHeaderEmail] = useState("");
   const [signedIn, setSignedIn] = useState(true);
-  useEffect(() => {
-    api
-      .getCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   const [currentUser, setCurrentUser] = useState({
     name: "",
     about: "",
     avatar: "",
   });
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+    Promise.all([api.getCurrentUser(), api.getCards()])
+      .then(([user, cards]) => {
+        setCurrentUser(user);
+        setCards(cards);
+      })
+      .catch((err) => console.log(err));
+    }
+  }, [isLoggedIn]);
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      authApi
+        .checkToken(jwt)
+        .then((data) => {
+          if (data) {
+            setIsLoggedIn(true);
+            setHeaderEmail(data.data.email);
+            navigate("/", { replace: true });
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
+
+  function handleUpdateUser(data) {
+    console.log("dssd");
+    setIsLoadingUpdateUser(true);
+    api
+      .createNewProfile(data.name, data.about)
+      .then((newUser) => {
+        setCurrentUser(newUser);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {});
+  }
 
   useEffect(() => {
     api
@@ -59,6 +89,42 @@ function App() {
         console.log(err);
       });
   }, []);
+  useEffect(() => {
+    api
+      .getCards()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  
+  function handleAuthUser(email, password) {
+    authApi
+      .loginUser(email, password)
+      .then((data) => {
+        if (data.token) {
+          setHeaderEmail(email);
+          setIsLoggedIn(true);
+          localStorage.setItem("jwt", data.token);
+          navigate("/", { replace: true });
+        }
+      })
+      .catch((err) => {
+        setIsInfoTolltipSuccess(false);
+        setIsSuccessPopupOpen(true);
+        console.log(err);
+      });
+  }
+  
+  
+
+  const handleSignOut = () => {
+    setIsLoggedIn(false);
+    setHeaderEmail("");
+    localStorage.removeItem("jwt");
+  };
 
   function showTooltipResponse(signedIn) {
     setIsInfoTolltipSuccess(true);
@@ -105,20 +171,7 @@ function App() {
       });
   }
 
-  function handleUpdateUser(data) {
-    console.log("dssd");
-    setIsLoadingUpdateUser(true);
-    api
-      .createNewProfile(data.name, data.about)
-      .then((newUser) => {
-        setCurrentUser(newUser);
-        closeAllPopups();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {});
-  }
+  
 
   function handleUpdateAvatar(data) {
     api
@@ -207,45 +260,7 @@ function App() {
       .finally(() => setIsSuccessPopupOpen(true));
   }
 
-  function handleAuthUser(email, password) {
-    authApi
-      .loginUser(email, password)
-      .then((data) => {
-        if (data.token) {
-          setHeaderEmail(email);
-          setIsLoggedIn(true);
-          localStorage.setItem("jwt", data.token);
-          navigate("/", { replace: true });
-        }
-      })
-      .catch((err) => {
-        setIsInfoTolltipSuccess(false);
-        setIsSuccessPopupOpen(true);
-        console.log(err);
-      });
-  }
-
-  useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      authApi
-        .checkToken(jwt)
-        .then((data) => {
-          if (data) {
-            setIsLoggedIn(true);
-            setHeaderEmail(data.data.email);
-            navigate("/", { replace: true });
-          }
-        })
-        .catch((err) => console.log(err));
-    }
-  }, []);
-
-  const handleSignOut = () => {
-    setIsLoggedIn(false);
-    setHeaderEmail("");
-    localStorage.removeItem("jwt");
-  };
+  
 
   return (
     <div className="App">
@@ -253,6 +268,14 @@ function App() {
         <div className="container">
           <Header email={headerEmail} onSignOut={handleSignOut} />
           <Routes>
+            <Route
+              path="/sign-up"
+              element={<Register onRegister={handleRegisterUser} />}
+            />
+            <Route
+              path="/sign-in"
+              element={<Login onLogin={handleAuthUser} />}
+            />
             <Route
               path="/"
               element={
@@ -269,14 +292,6 @@ function App() {
                   isLoggedIn={isLoggedIn}
                 />
               }
-            />
-            <Route
-              path="/sign-up"
-              element={<Register onRegister={handleRegisterUser} />}
-            />
-            <Route
-              path="/sign-in"
-              element={<Login onLogin={handleAuthUser} />}
             />
           </Routes>
           <Footer />

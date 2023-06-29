@@ -15,7 +15,15 @@ class Api {
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     }
-  
+    getCurrentUser() {
+      const token = localStorage.getItem("jwt");
+      return fetch(`${this._basePath}/users/me `, {
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }).then(this._getJson);
+    }
     getCards() {
       const token = localStorage.getItem("jwt");
       return fetch(`${this._basePath}/cards`, {
@@ -41,15 +49,7 @@ class Api {
       }).then(this._getJson);
     }
   
-    getCurrentUser() {
-      const token = localStorage.getItem("jwt");
-      return fetch(`${this._basePath}/users/me `, {
-        headers: {
-          "content-type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-      }).then(this._getJson);
-    }
+    
     deleteCard(id) {
       const token = localStorage.getItem("jwt");
       return fetch(`${this._basePath}/cards/${id} `, {

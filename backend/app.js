@@ -20,7 +20,6 @@ const { createUser, login } = require('./controllers/login');
 app.use(requestLogger);
 app.post('/signin', loginValid, login);
 app.post('/signup', createUserValid, createUser);
-
 app.use(usersRouter);
 app.use(cardsRouter);
 app.get('/crash-test', () => {
