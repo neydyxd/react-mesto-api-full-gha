@@ -117,6 +117,7 @@ class Api {
   }
 
   changeLikeCardStatus(id, isLiked) {
+    console.log(isLiked);
       return isLiked ? this._deleteLike(id) : this._likeCard(id)
   }
   }

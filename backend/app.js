@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -8,6 +9,8 @@ const cardsRouter = require('./routes/cards');
 const { createUserValid, loginValid } = require('./middlewares/validation');
 const NotFound = require('./errors/NotFound');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+
+const { DB_ADRESS } = require('./config');
 
 const app = express();
 app.use(cors());
@@ -30,7 +33,7 @@ app.get('/crash-test', () => {
 app.use((req, res, next) => {
   next(new NotFound('Страница по этому адресу не найдена'));
 });
-mongoose.connect('mongodb://127.0.0.1/mestodb');
+mongoose.connect(DB_ADRESS);
 app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {

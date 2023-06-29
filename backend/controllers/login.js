@@ -5,6 +5,8 @@ const BadRequest = require('../errors/BadRequest'); // 400
 const ConflictError = require('../errors/ConflictError'); // 409
 const AuthError = require('../errors/AuthError');
 
+const { NODE_ENV, JWT_SECRET } = require('../config');
+
 // создаем пользователя
 module.exports.createUser = (req, res, next) => {
   const {
@@ -51,7 +53,7 @@ module.exports.login = (req, res, next) => {
             return Promise.reject(new AuthError('Неправильные почта или пароль'));
           }
           return res.send({
-            token: jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' }),
+            token: jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' }),
           });
         });
     })
