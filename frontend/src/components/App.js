@@ -32,7 +32,6 @@ function App() {
   const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
   const [headerEmail, setHeaderEmail] = useState("");
   const [signedIn, setSignedIn] = useState(true);
-
   useEffect(() => {
     api
       .getCards()
@@ -118,7 +117,6 @@ function App() {
   }
 
   function handleAddCard(card) {
-    console.log("dssd");
     console.log(card);
     api
       .createNewCard({ item: card })

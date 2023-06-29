@@ -13,16 +13,6 @@ function Main({
 }) {
   const currentUser = useContext(CurrentUserContext);
 
-  const cardsElements = cards.map((card) => (
-    <div key={card._id}>
-      <Card
-        card={card}
-        onCardClick={onCardClick}
-        onCardLike={onCardLike}
-        onCardDelete={onCardDelete}
-      />
-    </div>
-  ));
   return (
     <main>
       <section className="profile">
@@ -53,8 +43,21 @@ function Main({
           onClick={onAddPlace}
         ></button>
       </section>
-      <section className="poster">{cardsElements}</section>
+      <section className="poster">
+          {cards.map((card) => {
+            return (
+              <Card
+                card={card}
+                key={card._id}             
+                onCardClick={onCardClick}
+                onCardLike={onCardLike}
+                onCardDelete={onCardDelete}
+              />
+            );
+            })}
+        </section>
     </main>
+    
   );
 }
 
