@@ -6,8 +6,7 @@ import { useContext } from "react";
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = useContext(CurrentUserContext);
   const isOwn = currentUser._id === card.owner;
-  console.log(card);
-  const isLiked = card.likes.some(i => i === currentUser._id);
+  const isLiked = card.likes.some((i) => i === currentUser._id);
   const cardLikeButtonClassName = `poster__like-button ${
     isLiked && "poster__like-button_active"
   }`;

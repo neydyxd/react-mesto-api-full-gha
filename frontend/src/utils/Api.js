@@ -92,7 +92,7 @@ class Api {
         }),
       }).then(this._getJson);
     }
-    _likeCard(id) {
+    likeCard(id) {
       const token = localStorage.getItem("jwt");
       return fetch(`${this._basePath}/cards/${id}/likes`, {
           method: "PUT",
@@ -104,7 +104,7 @@ class Api {
       .then(this._getJson);
   }
 
-  _deleteLike(id) {
+    deleteLike(id) {
       const token = localStorage.getItem("jwt");
       return fetch(`${this._basePath}/cards/${id}/likes`, {
           method: "DELETE",
@@ -116,10 +116,7 @@ class Api {
       .then(this._getJson);
   }
 
-  changeLikeCardStatus(id, isLiked) {
-    console.log(isLiked);
-      return isLiked ? this._deleteLike(id) : this._likeCard(id)
-  }
+ 
   }
 
   const api = new Api('https://backend.neydy.nomoredomains.rocks');
