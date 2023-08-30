@@ -26,7 +26,7 @@
 
 # Инструкция по установке:
 1. Клонировать репозиторий 
-`https://github.com/Sonyamaster1/react-mesto-api-full.git`
+`https://github.com/neydyxd/react-mesto-api-full-gha.git`
 2. Установить зависимости:
 `cd react-mesto-api-full`
 `npm install`
